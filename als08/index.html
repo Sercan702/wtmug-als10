@@ -62,13 +62,21 @@ peerIdEl.textContent = myId;
 const peer = new Peer(myId, { debug: 1 });
 let conn = null;
 
-QRCode.toCanvas(qrCanvas, myId, { width: 260, margin: 1, color: { dark: '#0f172a', light: '#ffffff' } }, err => {
-  if (err) toast('QR oluşturulamadı');
-});
+function drawQR(id) {
+  if (typeof QRCode === 'undefined') {
+    toast('QR kütüphanesi yüklenemedi, internet bağlantını kontrol et');
+    return;
+  }
+  QRCode.toCanvas(qrCanvas, id, { width: 260, margin: 1, color: { dark: '#0f172a', light: '#ffffff' } }, err => {
+    if (err) { console.error(err); toast('QR oluşturulamadı'); }
+  });
+}
+
+window.addEventListener('load', () => drawQR(myId));
 
 peer.on('open', id => {
   peerIdEl.textContent = id;
-  QRCode.toCanvas(qrCanvas, id, { width: 260, margin: 1 });
+  drawQR(id);
 });
 
 peer.on('connection', c => {
