@@ -217,10 +217,9 @@ let studentConn = null;
 function startStudent() {
   studentPeer = new Peer(randomId('ogr-'), { debug: 1 });
 
-  if (isMobileDevice()) {
-    studentScanBtn.classList.remove('hidden');
-    studentScanBtn.onclick = openStudentScanner;
-  }
+   // Butonu her zaman göster — kamera izni olmayan cihazlarda tıklanınca uyarı verir
+  studentScanBtn.classList.remove('hidden');
+  studentScanBtn.onclick = openStudentScanner;
 
   studentConnectBtn.onclick = () => {
     const id = teacherIdInput.value.trim();
