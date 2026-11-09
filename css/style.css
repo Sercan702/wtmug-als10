@@ -95,8 +95,12 @@ html, body {
 .qr-box {
   display: flex; flex-direction: column; align-items: center; gap: 12px;
   padding: 18px; background: #fff; border-radius: 14px; color: #0f172a;
+  min-height: 320px; justify-content: center;
 }
-.qr-box canvas, .qr-box img { max-width: 260px; height: auto; border-radius: 8px; display: block; }
+.qr-box canvas, .qr-box img {
+  width: 260px !important; height: 260px !important;
+  max-width: 100%; border-radius: 8px; display: block; background: #fff;
+}
 
 .id-chip {
   display: inline-block; font-family: ui-monospace, Menlo, Consolas, monospace;
