@@ -120,12 +120,22 @@ let teacherPeer = null;
 let teacherFileObj = null;
 let teacherConnections = new Map();
 
+function drawTeacherQR(id) {
+  if (typeof QRCode === 'undefined') {
+    toast('QR kütüphanesi yüklenemedi, internet bağlantını kontrol et');
+    return;
+  }
+  QRCode.toCanvas(teacherQr, id, { width: 260, margin: 1, color: { dark: '#0f172a', light: '#ffffff' } }, err => {
+    if (err) { console.error(err); toast('QR oluşturulamadı'); }
+  });
+}
+
 function startTeacher() {
   teacherPeer = new Peer(randomId('hoca-'), { debug: 1 });
 
   teacherPeer.on('open', id => {
     teacherIdEl.textContent = id;
-    QRCode.toCanvas(teacherQr, id, { width: 260, margin: 1 });
+    drawTeacherQR(id);
   });
 
   teacherPeer.on('connection', conn => {
